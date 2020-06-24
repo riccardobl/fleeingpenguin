@@ -27,7 +27,7 @@ window.preload=function() {
   Engine.setResource("BaseShader",loadShader("assets/shaders/base/base.vert", "assets/shaders/base/base.frag"));
   Engine.setResource("WorldShader", loadShader("assets/shaders/world/world.vert", "assets/shaders/world/world.frag"));
   Engine.setResource("noise-x3-512",  loadImage("assets/imgs/noise-x3-512.png"));
-  Engine.setResource("magicspace.sound",   loadSound('assets/music/magicspace.ogg'));
+  Engine.setResource("magicspace.sound",   loadSound('assets/music/magicspace.wav'));
   Engine.setResource("star.img", loadImage("assets/imgs/star.png"));
   Engine.setResource("monster.img", loadImage("assets/imgs/monster.png"));
   Engine.setResource("fireball.img", loadImage("assets/imgs/fireball.png"));
