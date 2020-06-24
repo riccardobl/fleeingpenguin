@@ -41,17 +41,30 @@ window.preload=function() {
 
 
 
-
+const Surfaces={
+  canvas:null,
+  scene:null
+}
 
 let WORLD;
 let PLAYER;
-let SCENE;
-let CANVAS;
+
+
+function recreateSurfaces(w,h){
+  if(!Surfaces.canvas)Surfaces.canvas=createCanvas(windowWidth, windowHeight, WEBGL);
+  resizeCanvas(windowWidth, windowHeight);
+
+  // if(Surfaces.scene)Surfaces.scene.remove();
+  // Surfaces.scene=createGraphics(w, h,WEBGL);
+}
 
 window.setup=function() { 
+  getAudioContext().suspend();
+
    setAttributes('antialias', true);
-  CANVAS=createCanvas(windowWidth, windowHeight, WEBGL);
-  SCENE=createGraphics(windowWidth, windowHeight,WEBGL);
+    recreateSurfaces(windowWidth, windowHeight);
+
+  // SCENE=createGraphics(windowWidth, windowHeight,WEBGL);
 
   Engine.getResource("magicspace.sound").loop();
 
@@ -82,7 +95,8 @@ window.setup=function() {
 }
 
 window.windowResized=function() {
-  resizeCanvas(windowWidth, windowHeight);
+  recreateSurfaces(windowWidth,windowHeight);
+  
 }
 
 let starGenTimer=1;
@@ -132,20 +146,23 @@ function gameLogic(){
 }
 
 window.draw=function() {
-  background(0);
+  // background(0);
   gameLogic();
   Engine.update();
   // console.assert(CANVAS);
   // console.assert(SCENE);
 
-  Engine.render(CANVAS,SCENE);
+  Engine.render(Surfaces.canvas,Surfaces.scene);
 
   // postprocessing
 
 
+  // image(Surfaces.scene,-windowWidth/2,-windowHeight/2);
 
-  image(SCENE,-width/2,-height/2);
 
 }
 
 
+window.mousePressed=function() {
+  userStartAudio();
+}

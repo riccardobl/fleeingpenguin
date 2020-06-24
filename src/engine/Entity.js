@@ -108,7 +108,7 @@ export default class Entity {
     }
     render(cam,c,fb) {
         const cc=this._renderer;
-        console.assert(fb);
+        // console.assert(fb);
         console.assert(typeof this._renderer!='undefined',"Renderer is undefined for ",this," set it to a valid renderer or null to disable rendering.");
         if(cc==null)return;
 

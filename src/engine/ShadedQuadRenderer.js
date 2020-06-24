@@ -14,6 +14,7 @@ export default class ShadedQuadRenderer extends Renderer {
         if(size){
             this.setSize(size);
         }
+
     }
    
     setShader(shader) {
@@ -43,31 +44,52 @@ export default class ShadedQuadRenderer extends Renderer {
 
         size.div(2.);
 
-        frameBuffer.push();
+        push();
         
-             // gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
-        // gl.colorMask(true, true, true, false);
-        frameBuffer.textureWrap(REPEAT,REPEAT);
-        // frameBuffer.background(0,0,0,0);
-        // pg.fill(255);
-        frameBuffer.shader(this._shader);
-        frameBuffer.noStroke();
+        textureWrap(REPEAT,REPEAT);
+
+    
+        shader(this._shader);
+        noStroke();
         for (let k in this._uniforms) {
             let v = this._uniforms[k];
             this._shader.setUniform(k, v);
         }
 
-        frameBuffer.translate(pos);
-        frameBuffer.blendMode(BLEND);        
-        frameBuffer.fill(0,0,0,0);
+        translate(pos);
+        blendMode(BLEND);        
+        fill(0,0,0,0);
 
-        frameBuffer.quad(
+        quad(
             - size.x,  - size.y,
              size.x, - size.y,
             size.x,  size.y,
             - size.x,  size.y
         );
-        frameBuffer.pop();
+        pop();
+        // frameBuffer.push();
+        
+
+        // frameBuffer.textureWrap(REPEAT,REPEAT);
+    
+        // frameBuffer.shader(this._shader);
+        // frameBuffer.noStroke();
+        // for (let k in this._uniforms) {
+        //     let v = this._uniforms[k];
+        //     this._shader.setUniform(k, v);
+        // }
+
+        // frameBuffer.translate(pos);
+        // frameBuffer.blendMode(BLEND);        
+        // frameBuffer.fill(0,0,0,0);
+
+        // frameBuffer.quad(
+        //     - size.x,  - size.y,
+        //      size.x, - size.y,
+        //     size.x,  size.y,
+        //     - size.x,  size.y
+        // );
+        // frameBuffer.pop();
 
     }
 }
