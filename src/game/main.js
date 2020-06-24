@@ -59,9 +59,10 @@ function recreateSurfaces(w,h){
 }
 
 window.setup=function() { 
+  frameRate(60);
   getAudioContext().suspend();
 
-   setAttributes('antialias', true);
+   setAttributes('antialias', false);
     recreateSurfaces(windowWidth, windowHeight);
 
   // SCENE=createGraphics(windowWidth, windowHeight,WEBGL);
