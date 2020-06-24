@@ -1,0 +1,54 @@
+<html>
+<head>
+    <style>
+        html,body{
+            padding:0;
+            margin:0;
+        }
+    </style>
+    <script src="libs/p5/p5.js"></script>
+    <script src="libs/p5/addons/p5.sound.js"></script>
+    <script src="libs/p5.dom.js"></script>
+    <script type="module" src="src/game/main.js"></script>
+    <style>
+        @font-face {
+  font-family: 'Piedra-Regular';
+  src:
+       url('assets/fonts/Piedra-Regular.ttf')  format('truetype')
+}
+        canvas{
+            z-index:1;
+        }
+        div.gui{
+            display:none;
+            pointer-events: none;
+            font-family:Piedra-Regular;
+            color:#c2d9ff;
+            text-shadow:
+                -1px -1px 0 #000,  
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;      
+       }
+        #score{
+            width:100%;
+            z-index:2;
+            position:absolute;
+            top:0;
+            width:100%;
+            background:transparent;
+            height:10vmin;
+            font-size:9vmin;
+            text-align: center;
+            display:block;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="gui"  id="score">0</div>
+    <div class="gui"  id="gameover"></div>
+    <div class="gui"  id="welcome"></div>
+
+</body>
+</html>
