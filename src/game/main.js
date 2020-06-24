@@ -51,7 +51,10 @@ let PLAYER;
 
 
 function recreateSurfaces(w,h){
-  if(!Surfaces.canvas)Surfaces.canvas=createCanvas(windowWidth, windowHeight, WEBGL);
+  if(!Surfaces.canvas){
+    Surfaces.canvas=createCanvas(windowWidth, windowHeight, WEBGL);
+    pixelDensity(1);
+  }
   resizeCanvas(windowWidth, windowHeight);
 
   // if(Surfaces.scene)Surfaces.scene.remove();
