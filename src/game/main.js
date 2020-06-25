@@ -22,19 +22,28 @@ window.preload=function() {
   Engine.setResource("BaseShader",loadShader("assets/shaders/base/base.vert", "assets/shaders/base/base.frag"));
   Engine.setResource("WorldShader", loadShader("assets/shaders/world/world.vert", "assets/shaders/world/world.frag"));
   Engine.setResource("noise-x3-512",  loadImage("assets/imgs/noise-x3-512.png"));
-  Engine.setResource("magicspace.sound",   loadSound('assets/music/magicspace.wav'));
   Engine.setResource("star.img", loadImage("assets/imgs/star.png"));
   Engine.setResource("monster.img", loadImage("assets/imgs/monster.png"));
   Engine.setResource("fireball.img", loadImage("assets/imgs/fireball.png"));
-  Engine.setResource("pickup.snd", loadSound("assets/sounds/pickup.wav"));
-  Engine.setResource("vanish.snd", loadSound("assets/sounds/vanish.wav"));
-  Engine.setResource("roar.snd", loadSound("assets/sounds/roar.wav"));
-  Engine.setResource("damage.snd",loadSound("assets/sounds/launch.wav"));
-  Engine.setResource("boost.snd",loadSound("assets/sounds/launch.wav"));
+
+ 
+  Engine.setResource("magicspace.sound",    new Howl({
+      src: ['assets/music/magicspace.wav'],
+      loop: true
+  }));
+
+  Engine.setResource("pickup.snd",    new Howl({src: ['assets/sounds/pickup.wav']}));
+  Engine.setResource("vanish.snd",    new Howl({src: ['assets/sounds/vanish.wav']}));
+  Engine.setResource("roar.snd",    new Howl({src: ['assets/sounds/roar.wav']}));
+  Engine.setResource("damage.snd",    new Howl({src: ['assets/sounds/launch.wav']}));
+  Engine.setResource("boost.snd",    new Howl({src: ['assets/sounds/launch.wav']}));
+  
+ 
 
 }
 
 
+p5.disableFriendlyErrors = true; 
 
 const Surfaces={
   canvas:null,
@@ -63,7 +72,7 @@ window.setup=function() {
   recreateSurfaces(windowWidth, windowHeight);
 
 
-  Engine.getResource("magicspace.sound").loop();
+  Engine.getResource("magicspace.sound").play();
 
   WORLD= new World();
   WORLD.addController(new FollowCameraController());
@@ -149,5 +158,6 @@ window.draw=function() {
 
 
 window.mousePressed=function() {
-  userStartAudio();
+  // fullscreen(true);
+
 }
