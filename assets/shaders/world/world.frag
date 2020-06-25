@@ -1,6 +1,3 @@
-// webgl requires that the first line of the fragment shader specify the precision
-// precision is dependent on device, but higher precision variables have more zeros
-// sometimes you'll see bugs if you use lowp so stick to mediump or highp
 precision mediump float;
 
 varying vec2 TexCoord; 
@@ -35,9 +32,7 @@ void main() {
   noise-=mix(0.,melting,meltingFactor);
 
   float terrainY=abs(noise*maxTerrainH)+basicTerrainHeight;
-  // terrainY+=pow(1.-TexCoord.x,2.)*terrainY*melting;
-  // vec4 noise2=texture2D(Noise,vec2(0,TexCoord.x+Time*0.3));
-  // noise=(noise+noise2)/2.;
+ 
   float y=1.-TexCoord.y;
   float x=TexCoord.x;
   vec3 skyColor1=vec3(0, 27, 107)/255.;
@@ -51,16 +46,15 @@ void main() {
     vec3 color=noiseRgb;
     color.r+=meltingFactor*2.;
     vec3 iceColor=vec3(230, 238, 255)/255.;
-    gl_FragColor.rgb= mix(iceColor,color,meltingFactor+0.1);
-    // if(h-y<0.01*terrainY) {
-    //   gl_FragColor.rgb=vec3(1);
-    // }
+    gl_FragColor.rgb= mix(iceColor,color,meltingFactor+0.15);
+ 
     
   }
 
   //. global warming
   {
     vec4 fire=vec4(255., 72., 0.,255.)/255.;
+    fire*=2.2;
     float blend=meltingFactor;
     vec3 dist=texture2D(Noise,TexCoord*-2.+Time).rgb;
 
