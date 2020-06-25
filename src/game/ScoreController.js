@@ -17,9 +17,11 @@ export default class ScoreController extends Controller{
     }
     onUpdate(entity,tpf){
         if(this._guiItem){
-            let scoreDom=select("#"+this._guiItem);
-            scoreDom.html(this._score);
+            if(this._score!=this._lastScore){
+                this._lastScore=this._score;
+                let scoreDom=select("#"+this._guiItem);
+                scoreDom.html(this._score);
+            }
         }
-
     }
   }

@@ -1,12 +1,7 @@
 
 import Camera from "../engine/Camera.js";
 import Controller from "../engine/Controller.js";
-import ShadedQuadRenderer from "../engine/ShadedQuadRenderer.js";
-import TexturedQuadRenderer from "../engine/TexturedQuadRenderer.js";
-import Renderer from "../engine/Renderer.js";
-import Entity from "../engine/Entity.js";
 import Engine from "../engine/Engine.js";
-import UniformsController from "./UniformsController.js";
 import FollowCameraController from "./FollowCameraController.js";
 import World from "./World.js";
 import Player from "./Player.js";
@@ -63,12 +58,10 @@ function recreateSurfaces(w,h){
 
 window.setup=function() { 
   frameRate(60);
-  getAudioContext().suspend();
 
    setAttributes('antialias', false);
-    recreateSurfaces(windowWidth, windowHeight);
+  recreateSurfaces(windowWidth, windowHeight);
 
-  // SCENE=createGraphics(windowWidth, windowHeight,WEBGL);
 
   Engine.getResource("magicspace.sound").loop();
 
@@ -88,10 +81,8 @@ window.setup=function() {
       f.y=my-ey;
       const s=0.1;
       if(f.y>s)f.y=s;
-      else if(f.y<-s)f.y=-s;
-      
+      else if(f.y<-s)f.y=-s;      
       return f;
-
     }
   )  .setClamp(null,null,-.3,.3)
   );
@@ -99,15 +90,18 @@ window.setup=function() {
 }
 
 window.windowResized=function() {
-  recreateSurfaces(windowWidth,windowHeight);
-  
+  recreateSurfaces(windowWidth,windowHeight);  
 }
 
 let starGenTimer=1;
 let pickupGenTimer=1;
-let pickups=[];
 let enemyGenTimer=2;
-function gameLogic(){
+
+
+window.draw=function() {
+
+
+  // logic
   const t=(deltaTime/1000.);
 
   const camPos=Engine.getCamera().getPosition();
@@ -116,25 +110,20 @@ function gameLogic(){
 
 
   const spawnX=Engine.getCamera().getPosition().x+.5;
+
+
   starGenTimer-=t;
   if(starGenTimer<0){
     starGenTimer=1.4;
-    // starGenTimer=0;
     const star= new Star(createVector(spawnX,WORLD.getRandomY(spawnX)));
     Engine.addToWorld(star);
-    pickups.push(star);
-
   }
-  pickupGenTimer-=t;
 
+  pickupGenTimer-=t;
   if(pickupGenTimer<0){
     pickupGenTimer=4.2;
-    // starGenTimer=0;
-    const pickup= new Boost(createVector(spawnX,WORLD.getRandomY(spawnX)));
-    Engine.addToWorld(pickup);
-
-    pickups.push(pickup);
-
+    const boost= new Boost(createVector(spawnX,WORLD.getRandomY(spawnX)));
+    Engine.addToWorld(boost);
   }
 
   enemyGenTimer-=t;
@@ -142,20 +131,11 @@ function gameLogic(){
     enemyGenTimer=0.8;
     const enemy=new Enemy(createVector(spawnX,WORLD.getRandomY(spawnX)));
     Engine.addToWorld(enemy);
-
   }
 
- 
+  //
 
-}
-
-window.draw=function() {
-  // background(0);
-  gameLogic();
   Engine.update();
-  // console.assert(CANVAS);
-  // console.assert(SCENE);
-
   Engine.render(Surfaces.canvas,Surfaces.scene);
 
   // postprocessing
@@ -163,7 +143,8 @@ window.draw=function() {
 
   // image(Surfaces.scene,-windowWidth/2,-windowHeight/2);
 
-
+  const fpsDom=select("#fps");
+  if(fpsDom)  fpsDom.html(frameRate().toFixed());
 }
 
 
