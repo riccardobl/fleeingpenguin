@@ -6,26 +6,74 @@
             margin:0;
         }
     </style>
+    <title>Fleeing Penguin</title>
     <script src="libs/p5/p5.min.js"></script>
     <script src="libs/p5.dom.min.js"></script>
     <script src="libs/howler.js"></script>
     <script type="module" src="src/game/main.js"></script>
+    <script>
+   
+        function gameOver(){
+            this.GAME_OVER=true;
+            document.getElementById("gameover").style.display="flex";
+            document.getElementById("score").style.display="none";
+            document.getElementById("finalscore").innerText=     document.getElementById("score").innerText;
+
+        }
+        function playGame(){
+            if(this.GAME_OVER){
+                location.reload();
+            }else{
+                if(window.location.hash!="#embed") {
+                    console.log("Request fullscreen!");
+                    document.body.requestFullscreen();
+                }
+                document.getElementById("welcome").style.display="none";
+                document.getElementById("score").style.display="block";
+            }
+        }
+    </script>
     <style>
         @font-face {
             font-family: 'Piedra-Regular';
             src:
                 url('assets/fonts/Piedra-Regular.ttf')  format('truetype')
         }
+        h1{
+            font-size: 12vmin;
+        }
+        h2{
+            font-size: 6vmin;
+        }
+        h3{
+            font-size: 2vmin;
+            font-weight: normal;
+        }
         html,body{
             overflow: hidden;
             position:fixed;
             top:0;
             left:0;
+            width:100%;
+            height:100%;
+            font-size: 3vmin;
+            
+
+        }
+        a,a:visited,a:hover{
+            all:unset;
+            text-decoration: underline;
+            font-style: italic;
+            color:#8bb6fb;
+            pointer-events: all;
+            
+
         }
         canvas{
             z-index:1;
         }
         div.gui{
+            user-select: none;
             display:none;
             pointer-events: none;
             font-family:Piedra-Regular;
@@ -46,7 +94,7 @@
             height:10vmin;
             font-size:9vmin;
             text-align: center;
-            display:block;
+            display:none;
 
         }
         #fps{
@@ -57,13 +105,68 @@
             font-size:1.5vmin;
             
         }
+
+        #welcome,#gameover{
+            display:block;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+            display:flex;
+            text-align: center;;
+            align-items: center;
+            justify-content: center;            
+            background:transparent;
+            position:fixed;
+            
+        }
+        #welcome span,#gameover span{
+            display:block;
+            margin:2vmin;
+
+        }
+        #gameover{ display:none; }
     </style>
    
 </head>
 <body>
     <div class="gui"  id="score">0</div>
-    <div class="gui"  id="gameover"></div>
-    <div class="gui"  id="welcome"></div>
+    <div class="gui"  id="gameover">
+        <span>
+            <h1>Fleeing Penguin - The End</h1>
+            You've Lost.
+            <br/>
+            But you scored <b id="finalscore"></b> points.
+
+            <h2>CLICK TO RESTART</h2>
+        </span>
+
+    </div>
+    <div class="gui"  id="welcome">
+        <span>
+            <h1>Fleeing Penguin</h1>
+            You are the <i>last penguin</i> of the <i>north pole</i>. 
+            <br/>
+            You need to flee extinction by <i>globalwarming</i>.
+            <br/>
+            Use the mouse to move up and down and dodge the <i> C O 2</i> monsters.
+            <br/>
+            Collect the jetpack boosts  (dw, it's green like planes)  to move forward and the stars to increase your score.
+            <br />
+            <br />
+            <h3>
+            This is a small light hearted game made to try out the
+             <a rel="nofollow"	href="https://p5js.org/">p5js</a> library, 
+             you can see the full source code on <a href="https://github.com/riccardobl/fleeingpenguin">github</a>.
+                <br />
+            This is actually a remake of one of my first 2d experiments i made in awt applets back in 2012!
+            You can see a screenshot of the old version <a rel="nofollow" href="assets/old.jpg">here</a>.
+        </h3>
+            <br />
+            <h2>CLICK TO PLAY</h2>
+        </span>
+        
+        </div>
     <div class="gui"  id="fps"></div>
 
 </body>

@@ -11,11 +11,12 @@ export default class Star extends Entity {
     static id = 0;
     constructor(at) {
         super("Star#" + (Star.id++), "pickup");
+        const size=0.02;
         this.setRenderer(new TexturedQuadRenderer(
             Engine.getResource("star.img"),
-            0.01
+            size
         ));
-        this.setCollisionRadius(0.01);
+        this.setCollisionRadius(size);
         this.setPosition(at);
         this.addController(new OnCollisionActionController(
             (self, b) => {

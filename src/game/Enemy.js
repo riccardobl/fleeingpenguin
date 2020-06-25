@@ -10,9 +10,10 @@ export default class Enemy extends Entity {
     static id = 0;
     constructor(at) {
         super("Enemy#"+(Enemy.id++),"pickup");
+        const size=0.05;
         this.setRenderer(new TexturedQuadRenderer(
             Engine.getResource("monster.img"),
-            0.04
+            size
         ));
         this.setCollisionRadius(0.01);
         this.setPosition(at);

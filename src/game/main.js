@@ -10,6 +10,7 @@ import Enemy from "./Enemy.js";
 import Boost from "./Boost.js";
 import ScoreController from "./ScoreController.js";
 import MotionController from "./MotionController.js";
+import DestructionActionController from "./DestructionActionController.js";
 
 const Settings={
   SPEED:0.1
@@ -47,7 +48,6 @@ p5.disableFriendlyErrors = true;
 
 const Surfaces={
   canvas:null,
-  scene:null
 }
 
 let WORLD;
@@ -61,8 +61,7 @@ function recreateSurfaces(w,h){
   }
   resizeCanvas(windowWidth, windowHeight);
 
-  // if(Surfaces.scene)Surfaces.scene.remove();
-  // Surfaces.scene=createGraphics(w, h,WEBGL);
+
 }
 
 window.setup=function() { 
@@ -79,23 +78,6 @@ window.setup=function() {
 
   Engine.addToWorld(WORLD);
   
-  PLAYER = new Player();
-  PLAYER.addController(new FollowCameraController(createVector(1.,0.))
-  );
-  PLAYER.addController(new ScoreController("score"));
-  PLAYER.addController(new MotionController(
-    (entity,f)=>{
-      let my=(mouseY/height)-.5;
-      let ey=entity.getPosition().y
-      f.y=my-ey;
-      const s=0.1;
-      if(f.y>s)f.y=s;
-      else if(f.y<-s)f.y=-s;      
-      return f;
-    }
-  )  .setClamp(null,null,-.3,.3)
-  );
-  Engine.addToWorld(PLAYER);
 }
 
 window.windowResized=function() {
@@ -142,22 +124,53 @@ window.draw=function() {
     Engine.addToWorld(enemy);
   }
 
-  //
+  
 
   Engine.update();
   Engine.render(Surfaces.canvas,Surfaces.scene);
 
-  // postprocessing
 
-
-  // image(Surfaces.scene,-windowWidth/2,-windowHeight/2);
 
   const fpsDom=select("#fps");
   if(fpsDom)  fpsDom.html(frameRate().toFixed());
 }
 
 
-window.mousePressed=function() {
-  // fullscreen(true);
+function playGame(){
+  window.playGame();
 
+  if(PLAYER)return;
+
+  PLAYER = new Player();
+  PLAYER.addController(new FollowCameraController(createVector(1.,0.))
+  );
+  PLAYER.addController(new ScoreController("score"));
+  PLAYER.addController(new MotionController(
+    (entity,f)=>{
+      let my=(mouseY/height)-.5;
+      let ey=entity.getPosition().y
+      f.y=my-ey;
+      const s=0.1;
+      if(f.y>s)f.y=s;
+      else if(f.y<-s)f.y=-s;      
+      return f;
+    }
+  )  .setClamp(null,null,-.3,.3)
+  );
+
+  PLAYER.addController(new DestructionActionController(
+    (entity)=>{
+      gameOver();
+    }
+  )  );
+
+  Engine.addToWorld(PLAYER);
+}
+
+function gameOver(){
+  window.gameOver();
+}
+
+window.mouseReleased=function() {
+  playGame();
 }

@@ -9,11 +9,13 @@ export default class Boost extends Entity {
     static id = 0;
     constructor(at) {
         super("Boost#"+(Boost.id++),"pickup");
+        const size=0.02;
+
         this.setRenderer(new TexturedQuadRenderer(
             Engine.getResource("fireball.img"),
-            0.02
+            size
         ));
-        this.setCollisionRadius(0.01);
+        this.setCollisionRadius(size);
         this.setPosition(at);
         this.addController(new OnCollisionActionController(
             (self, b) => {

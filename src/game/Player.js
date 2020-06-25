@@ -30,14 +30,13 @@ class PlayerFlapAction extends Controller {
 export default class Player extends Entity {
     constructor() {
         super("Player", "player");
-
+        const size=0.06;
         this.setPosition(createVector(0., 0.));
-        this.setCollisionRadius(0.03);
+        this.setCollisionRadius(size/2);
 
         this.setRenderer(new TexturedQuadRenderer(
             Engine.getResource("penguin1"),
-            0.03
-        ));
+            size        ));
         this.addController(new UniformsController());
         this.addController(new PlayerFlapAction());
         
