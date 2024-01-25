@@ -22,12 +22,13 @@ void main() {
   vec2 samplePos=vec2(TexCoord.x+WorldX );
 
   vec3 noiseRgb=texture2D(Noise,samplePos).rgb;
-
+  
   float noise=noiseRgb.r+sin(TexCoord.x+WorldX)*sinStr;
   
   vec2 samplePos2=vec2(TexCoord.x*2.+t );
 
   float melting= texture2D(Noise,samplePos2).r;
+
   float meltingFactor=pow(1.-TexCoord.x,6.);
   noise-=mix(0.,melting,meltingFactor);
 
@@ -52,14 +53,14 @@ void main() {
   }
 
   //. global warming
-  {
-    vec4 fire=vec4(255., 72., 0.,255.)/255.;
-    fire*=2.2;
-    float blend=meltingFactor;
-    vec3 dist=texture2D(Noise,TexCoord*-2.+Time).rgb;
+  // {
+  //   vec4 fire=vec4(255., 72., 0.,255.)/255.;
+  //   fire*=2.2;
+  //   float blend=meltingFactor;
+  //   vec3 dist=texture2D(Noise,TexCoord*-2.+Time).rgb;
 
-    blend*=dist.x+dist.y;
-    blend=clamp(0.,1.,blend);
-    gl_FragColor=mix(gl_FragColor,fire,blend);
-  }
+  //   blend*=dist.x+dist.y;
+  //   blend=clamp(0.,1.,blend);
+  //   gl_FragColor=mix(gl_FragColor,fire,blend);
+  // }
 }
